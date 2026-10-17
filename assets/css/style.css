@@ -275,9 +275,8 @@ footer a:hover { color: var(--ink); }
 
 @keyframes fade { from { opacity: 0; } }
 @keyframes rise { from { opacity: 0; transform: translateY(16px) scale(.99); } }
-.reveal { opacity: 0; transform: translateY(14px); transition: opacity .6s, transform .6s; }
-.reveal.in { opacity: 1; transform: none; }
-@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } .reveal { opacity: 1; transform: none; } }
+.reveal.in { animation: rise .6s ease-out both; }
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
 
 /* ---------- Admin ---------- */
 .admin-wrap { padding: 120px 0 80px; margin-top: -68px; }
