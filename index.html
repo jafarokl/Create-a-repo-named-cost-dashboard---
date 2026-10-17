@@ -72,9 +72,9 @@
       <div class="section-head reveal">
         <div>
           <div class="kicker">The library</div>
-          <h2 class="title">Preview anything. Download what helps.</h2>
+          <h2 class="title">Preview it first. Then get what helps.</h2>
         </div>
-        <p>Open any item to preview it right in your browser — slides, spreadsheets, PDFs, documents and videos.</p>
+        <p>Every item has its own page with sample pages, what's inside, who it's for and how to use it.</p>
       </div>
       <div class="toolbar">
         <div class="field">
@@ -93,6 +93,12 @@
           <option value="image">Image</option>
           <option value="link">Link</option>
           <option value="other">Other</option>
+        </select>
+        <label class="sr-only" for="price-filter">Price</label>
+        <select id="price-filter">
+          <option value="">Free &amp; paid</option>
+          <option value="free">Free only</option>
+          <option value="paid">Paid only</option>
         </select>
         <label class="sr-only" for="sort">Sort</label>
         <select id="sort">
@@ -178,23 +184,6 @@
       <span><a href="#library">Library</a> · <a href="#" id="contact-link">Contact</a> · <a href="admin.html">Admin</a></span>
     </div>
   </footer>
-
-  <div class="modal" id="viewer" role="dialog" aria-modal="true" aria-labelledby="v-title">
-    <div class="modal-backdrop" data-close></div>
-    <div class="modal-panel">
-      <button class="close-btn" data-close aria-label="Close"></button>
-      <div class="viewer" id="v-stage"></div>
-      <aside class="details">
-        <span id="v-badge"></span>
-        <h3 id="v-title"></h3>
-        <p id="v-desc"></p>
-        <dl id="v-meta"></dl>
-        <div class="tags" id="v-tags"></div>
-        <p class="note" id="v-note"></p>
-        <div class="actions" id="v-actions"></div>
-      </aside>
-    </div>
-  </div>
 
   <script src="assets/js/common.js"></script>
   <script src="assets/js/app.js"></script>

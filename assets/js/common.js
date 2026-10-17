@@ -88,3 +88,61 @@ function initNav() {
   btn.addEventListener('click', () => links.classList.toggle('open'));
   links.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => links.classList.remove('open')));
 }
+
+// ---------- Selling helpers ----------
+function isPaid(item) { return Number(item.price) > 0; }
+
+function priceLabel(item, currency = 'USD') {
+  const p = Number(item.price) || 0;
+  if (p <= 0) return 'Free';
+  try {
+    return new Intl.NumberFormat(undefined, { style: 'currency', currency, maximumFractionDigits: p % 1 ? 2 : 0 }).format(p);
+  } catch { return '$' + p; }
+}
+
+// Product pages use a bare #id so links work everywhere, including static hosts with no routing.
+function itemHref(item) { return 'item.html#' + encodeURIComponent(item.id); }
+
+// Where the main call-to-action goes: payment link, file, external URL, or an email request as a fallback.
+function primaryAction(item, site = {}) {
+  if (isPaid(item)) {
+    if (item.buyUrl) return { href: item.buyUrl, label: `Buy now · ${priceLabel(item, site.currency)}`, external: true };
+    const mail = site.contactEmail || '';
+    return {
+      href: `mailto:${mail}?subject=${encodeURIComponent('Purchase: ' + item.title)}&body=${encodeURIComponent(`Hi, I'd like to buy "${item.title}" (${priceLabel(item, site.currency)}).`)}`,
+      label: `Buy · ${priceLabel(item, site.currency)}`,
+    };
+  }
+  if (item.type === 'link') return { href: item.url, label: 'Open free resource', external: true };
+  if (item.file) return { href: item.file, label: 'Download free', download: true };
+  return { href: item.url || '#', label: 'Get it free', external: true };
+}
+
+function renderCard(item, data, featured = false) {
+  const t = typeOf(item);
+  const cat = data.categories.find((c) => c.id === item.category);
+  const thumb = item.previews && item.previews[0];
+  return `<a class="card ${featured ? 'featured-card' : ''} reveal" style="--tc:${t.color}" href="${itemHref(item)}">
+    ${featured || thumb ? `<div class="thumb ${thumb ? 'has-img' : ''}">${thumb ? `<img src="${esc(thumb)}" alt="" loading="lazy">` : `${ICONS[t.icon]}<span class="ext">${t.short}</span>`}</div>` : ''}
+    <div class="card-top">
+      <span class="type-badge" style="--tc:${t.color}">${ICONS[t.icon]}${t.label}</span>
+      <span class="card-flags">${isNew(item.date) ? '<span class="new-pill">NEW</span>' : ''}<span class="price-chip ${isPaid(item) ? '' : 'free'}">${priceLabel(item, data.site?.currency)}</span></span>
+    </div>
+    <h3>${esc(item.title)}</h3>
+    <p>${esc(item.headline || item.description)}</p>
+    ${cat ? `<span class="tag" style="align-self:flex-start">${esc(cat.name)}</span>` : ''}
+    <div class="card-meta">
+      ${item.minutes ? `<span>${ICONS.clock}${item.minutes} min</span>` : ''}
+      ${item.level ? `<span>${ICONS.level}${esc(item.level)}</span>` : ''}
+      <span class="card-cta">View details →</span>
+    </div>
+  </a>`;
+}
+
+ICONS.check = svg('<path d="M5 12.5l4.5 4.5L19 7.5"/>');
+ICONS.user = svg('<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>');
+ICONS.shield = svg('<path d="M12 3l8 3v6c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V6z"/><path d="M9 12l2 2 4-4"/>');
+ICONS.edit = svg('<path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M14 6l4 4"/>');
+ICONS.left = svg('<path d="M15 5l-7 7 7 7"/>');
+ICONS.right = svg('<path d="M9 5l7 7-7 7"/>');
+ICONS.eye = svg('<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>');

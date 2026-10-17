@@ -2,7 +2,35 @@
   "site": {
     "name": "Applied AI Academy",
     "tagline": "Practical AI for business owners & professionals",
-    "contactEmail": "hello@example.com"
+    "contactEmail": "hello@example.com",
+    "currency": "USD",
+    "faq": [
+      {
+        "q": "How do I get the file after buying?",
+        "a": "Checkout is handled by our secure payment partner. You get a download link by email straight after payment."
+      },
+      {
+        "q": "Can I edit the files?",
+        "a": "Yes. Every PowerPoint, Excel and Word file is fully editable, so you can add your logo, change numbers and adapt it to your business."
+      },
+      {
+        "q": "Do I need special software?",
+        "a": "No. Files open in Microsoft Office, Google Workspace, Apple iWork or LibreOffice."
+      },
+      {
+        "q": "Can I use it with my team?",
+        "a": "Yes. One purchase covers use inside your own company. Please don't resell or publish the files."
+      },
+      {
+        "q": "What if it isn't right for me?",
+        "a": "Email us within 14 days and we'll sort it out."
+      }
+    ],
+    "trust": [
+      "Secure checkout",
+      "Fully editable file",
+      "14-day satisfaction promise"
+    ]
   },
   "categories": [
     {
@@ -61,7 +89,6 @@
       "description": "A short slide deck covering where AI creates value today, how to pick your first use cases, and a 90-day adoption plan.",
       "category": "strategy",
       "type": "pptx",
-      "file": "materials/ai-strategy-101.pptx",
       "tags": [
         "strategy",
         "beginner",
@@ -70,7 +97,49 @@
       "level": "Beginner",
       "minutes": 12,
       "date": "2026-10-15",
-      "featured": true
+      "featured": true,
+      "headline": "Walk into your next leadership meeting with a clear, credible AI plan.",
+      "price": 29,
+      "buyUrl": "",
+      "audience": [
+        "Business owners deciding where AI fits",
+        "Managers asked to 'do something with AI'",
+        "Consultants who need a ready client deck"
+      ],
+      "inside": [
+        "5 presenter-ready, fully editable slides (16:9)",
+        "Value map: where AI pays off in drafting, summarising, analysis and automation",
+        "Use-case selection criteria you can score against",
+        "A 90-day adoption plan split into three phases",
+        "A guardrails slide covering data, review and shared prompts"
+      ],
+      "useCases": [
+        {
+          "title": "Board or leadership briefing",
+          "text": "Present the plan as-is or drop the slides into your own company template."
+        },
+        {
+          "title": "Kick off an AI pilot",
+          "text": "Use the selection criteria to pick 2–3 first use cases with your team."
+        },
+        {
+          "title": "Client workshops",
+          "text": "Consultants can rebrand it and run a one-hour strategy session."
+        }
+      ],
+      "benefits": [
+        "Saves a day or more of research and slide design",
+        "Plain-English language that non-technical leaders follow",
+        "Gives you a phased plan, not just a list of ideas"
+      ],
+      "previews": [
+        "previews/ai-strategy-101-1.jpg",
+        "previews/ai-strategy-101-2.jpg",
+        "previews/ai-strategy-101-3.jpg",
+        "previews/ai-strategy-101-4.jpg",
+        "previews/ai-strategy-101-5.jpg"
+      ],
+      "length": "5 slides"
     },
     {
       "id": "ai-roi-calculator",
@@ -78,7 +147,6 @@
       "description": "Plug in hours saved, team size and tool costs to estimate monthly and annual return from an AI rollout.",
       "category": "finance-ops",
       "type": "xlsx",
-      "file": "materials/ai-roi-calculator.xlsx",
       "tags": [
         "roi",
         "template",
@@ -87,7 +155,45 @@
       "level": "Intermediate",
       "minutes": 10,
       "date": "2026-10-14",
-      "featured": true
+      "featured": true,
+      "headline": "Show the business case for AI in numbers your finance team will accept.",
+      "price": 19,
+      "buyUrl": "",
+      "audience": [
+        "Owners weighing up AI tool subscriptions",
+        "Finance and ops leads building a budget case",
+        "Managers who need sign-off for a pilot"
+      ],
+      "inside": [
+        "Editable Excel model with clearly marked input cells",
+        "Monthly value of time saved, tool cost and net benefit",
+        "Annual net benefit, payback period and first-year ROI",
+        "Formulas left open so you can see and adjust every step",
+        "Works in Excel, Google Sheets and Numbers"
+      ],
+      "useCases": [
+        {
+          "title": "Before buying tools",
+          "text": "Enter team size and seat price to see if the subscription pays for itself."
+        },
+        {
+          "title": "Budget requests",
+          "text": "Paste the results table into a proposal or email to get sign-off."
+        },
+        {
+          "title": "After a pilot",
+          "text": "Replace estimates with measured hours saved to report real ROI."
+        }
+      ],
+      "benefits": [
+        "Turns a vague 'AI saves time' claim into a defensible number",
+        "Takes about 10 minutes to fill in",
+        "Transparent formulas, so there are no black-box results"
+      ],
+      "previews": [
+        "previews/ai-roi-calculator-1.jpg"
+      ],
+      "length": "1 worksheet"
     },
     {
       "id": "prompt-playbook",
@@ -95,7 +201,6 @@
       "description": "Twelve proven prompt patterns for email, reports, research and analysis — with fill-in-the-blank templates.",
       "category": "prompting",
       "type": "pdf",
-      "file": "materials/prompt-playbook.pdf",
       "tags": [
         "prompts",
         "templates",
@@ -104,7 +209,45 @@
       "level": "Beginner",
       "minutes": 8,
       "date": "2026-10-12",
-      "featured": true
+      "featured": true,
+      "headline": "Twelve copy-and-paste prompts that get useful answers the first time.",
+      "price": 12,
+      "buyUrl": "",
+      "audience": [
+        "Professionals new to AI assistants",
+        "Teams that want consistent results",
+        "Anyone tired of vague, generic AI answers"
+      ],
+      "inside": [
+        "12 prompt patterns, each with a fill-in-the-blank template",
+        "Patterns for writing, summarising, critique, planning and data extraction",
+        "Works with ChatGPT, Claude, Gemini and Copilot",
+        "Printable PDF you can share with your team"
+      ],
+      "useCases": [
+        {
+          "title": "Daily email and reports",
+          "text": "Use the role-task-context and rewrite-tone patterns to draft faster."
+        },
+        {
+          "title": "Reviewing work",
+          "text": "Use the critique pattern to stress-test proposals before they go out."
+        },
+        {
+          "title": "Team onboarding",
+          "text": "Hand it to new starters as the house guide to using AI."
+        }
+      ],
+      "benefits": [
+        "Better answers on the first try, with less back-and-forth",
+        "A shared method your whole team can use",
+        "Short enough to read in one coffee break"
+      ],
+      "previews": [
+        "previews/prompt-playbook-1.jpg",
+        "previews/prompt-playbook-2.jpg"
+      ],
+      "length": "2 pages"
     },
     {
       "id": "prompt-engineering-guide",
@@ -119,7 +262,28 @@
       ],
       "level": "Intermediate",
       "minutes": 20,
-      "date": "2026-10-10"
+      "date": "2026-10-10",
+      "headline": "A free, in-depth reference for writing better prompts.",
+      "price": 0,
+      "buyUrl": "",
+      "audience": [
+        "People who have mastered the basics",
+        "Teams building repeatable AI workflows"
+      ],
+      "inside": [
+        "Techniques for clear instructions and examples",
+        "Structuring long and complex tasks"
+      ],
+      "useCases": [
+        {
+          "title": "Going deeper",
+          "text": "Read it after the Prompt Playbook to level up."
+        }
+      ],
+      "benefits": [
+        "Free external resource"
+      ],
+      "previews": []
     },
     {
       "id": "team-offsite-checklist",
@@ -127,14 +291,44 @@
       "description": "A general-purpose checklist for planning a team offsite: venue, agenda, budget and follow-ups.",
       "category": "general",
       "type": "docx",
-      "file": "materials/team-offsite-checklist.docx",
       "tags": [
         "template",
         "operations"
       ],
       "level": "All levels",
       "minutes": 5,
-      "date": "2026-10-08"
+      "date": "2026-10-08",
+      "headline": "Plan a smooth team offsite without forgetting the details.",
+      "price": 5,
+      "buyUrl": "",
+      "audience": [
+        "Office and operations managers",
+        "Team leads organising an away day",
+        "Founders planning their first company retreat"
+      ],
+      "inside": [
+        "Editable Word checklist",
+        "Timeline from 8 weeks out to the follow-up",
+        "Venue, agenda, budget and logistics items"
+      ],
+      "useCases": [
+        {
+          "title": "Planning",
+          "text": "Work through it week by week and tick items off."
+        },
+        {
+          "title": "Delegating",
+          "text": "Assign sections to colleagues and track progress."
+        }
+      ],
+      "benefits": [
+        "Nothing forgotten on the day",
+        "Reusable every year"
+      ],
+      "previews": [
+        "previews/team-offsite-checklist-1.jpg"
+      ],
+      "length": "1 page"
     },
     {
       "id": "ai-glossary",
@@ -149,7 +343,39 @@
       ],
       "level": "Beginner",
       "minutes": 6,
-      "date": "2026-10-16"
+      "date": "2026-10-16",
+      "headline": "Understand the AI terms everyone is using, in two minutes each.",
+      "price": 0,
+      "buyUrl": "",
+      "audience": [
+        "Anyone new to AI",
+        "Leaders who want to follow vendor pitches",
+        "Teams starting their AI journey"
+      ],
+      "inside": [
+        "10 essential terms explained in plain English",
+        "Practical notes on what each means for your business",
+        "Printable 2-page PDF"
+      ],
+      "useCases": [
+        {
+          "title": "Before vendor meetings",
+          "text": "Know what LLM, RAG and agents mean before you're pitched."
+        },
+        {
+          "title": "Team training",
+          "text": "Share it as pre-reading for an AI workshop."
+        }
+      ],
+      "benefits": [
+        "Free download, no sign-up",
+        "Removes the jargon barrier fast"
+      ],
+      "previews": [
+        "previews/ai-glossary-1.jpg",
+        "previews/ai-glossary-2.jpg"
+      ],
+      "length": "2 pages"
     },
     {
       "id": "meeting-to-action",
@@ -165,7 +391,38 @@
       ],
       "level": "Beginner",
       "minutes": 5,
-      "date": "2026-10-13"
+      "date": "2026-10-13",
+      "headline": "Turn any meeting into notes, owners and a follow-up email in five minutes.",
+      "price": 0,
+      "buyUrl": "",
+      "audience": [
+        "Managers who run lots of meetings",
+        "Project leads",
+        "Assistants and chiefs of staff"
+      ],
+      "inside": [
+        "A 5-step workflow",
+        "3 ready-to-use prompts for summaries, action tables and follow-ups",
+        "A review checklist before sending"
+      ],
+      "useCases": [
+        {
+          "title": "Weekly team meetings",
+          "text": "Send a clean summary and action list within minutes."
+        },
+        {
+          "title": "Client calls",
+          "text": "Turn rough notes into a professional follow-up."
+        }
+      ],
+      "benefits": [
+        "Free download",
+        "Saves 15–30 minutes per meeting"
+      ],
+      "previews": [
+        "previews/meeting-to-action-1.jpg"
+      ],
+      "length": "1 page"
     }
   ]
 }

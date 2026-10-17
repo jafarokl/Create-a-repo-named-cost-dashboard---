@@ -37,7 +37,7 @@
   <main class="admin-wrap" style="margin-top:-80px; padding-top:0; position:relative; z-index:2">
     <div class="container admin-grid">
       <div class="panel">
-        <h2>Add new material</h2>
+        <h2 id="form-title">Add new material</h2>
         <p>Anything goes — AI guides, templates, or unrelated resources. Create a new topic on the fly if you need one.</p>
         <form class="form" id="upload-form">
           <div class="seg" role="tablist">
@@ -74,8 +74,45 @@
             <label>Tags (comma separated) <input id="tags" placeholder="prompts, template, sales"></label>
           </div>
           <label style="display:flex; align-items:center; gap:10px; font-weight:500"><input id="featured" type="checkbox" style="width:auto"> Feature on the home page</label>
+
+          <fieldset class="fs">
+            <legend>Selling</legend>
+            <div class="row">
+              <label>Price (0 = free) <input id="price" type="number" min="0" step="0.01" value="0"></label>
+              <label>Buy link (Gumroad, Stripe, Lemon Squeezy…) <input id="buyUrl" type="url" placeholder="https://buy.stripe.com/…"></label>
+            </div>
+            <p class="help" id="paid-note" hidden>For paid items, <strong>don't upload the full file here</strong>: anything in a public repository can be downloaded by anyone. Upload the full file to your payment provider, paste its Buy link above, and upload only preview images below. Without a Buy link, the Buy button opens an email to you.</p>
+          </fieldset>
+
+          <fieldset class="fs">
+            <legend>Sales page</legend>
+            <label>Headline (the hook buyers see first) <input id="headline" placeholder="e.g. Show the business case for AI in numbers your finance team will accept."></label>
+            <label>What's inside (one per line) <textarea id="inside" placeholder="5 editable slides&#10;90-day adoption plan"></textarea></label>
+            <label>Who it's for (one per line) <textarea id="audience" placeholder="Business owners&#10;Team managers"></textarea></label>
+            <label>How people use it (one per line, as Title: description) <textarea id="useCases" placeholder="Budget requests: Paste the results table into your proposal."></textarea></label>
+            <label>Why it's worth it (one per line) <textarea id="benefits" placeholder="Saves a day of research"></textarea></label>
+            <div class="row">
+              <label>Format of the full file (if not uploaded here)
+                <select id="format">
+                  <option value="">Detect from uploaded file</option>
+                  <option value="pptx">PowerPoint</option><option value="xlsx">Excel</option><option value="docx">Word</option>
+                  <option value="pdf">PDF</option><option value="video">Video</option><option value="other">Other</option>
+                </select>
+              </label>
+            </div>
+            <div class="row">
+              <label>Size shown to buyers <input id="length" placeholder="e.g. 12 slides, 3 sheets"></label>
+              <label>Preview images (screenshots of a few pages)
+                <input id="previews" type="file" accept="image/png,image/jpeg,image/webp" multiple>
+              </label>
+            </div>
+            <p class="help" id="preview-note">Tip: add 2–5 screenshots of your best pages or slides. They show on the sales page as a sneak peek.</p>
+          </fieldset>
           <div class="status" id="status"></div>
-          <button class="btn btn-primary" type="submit" id="submit-btn">Publish to site</button>
+          <div class="buy-actions">
+            <button class="btn btn-primary" type="submit" id="submit-btn">Publish to site</button>
+            <button class="btn btn-ghost" type="button" id="cancel-edit" hidden>Cancel editing</button>
+          </div>
         </form>
       </div>
 

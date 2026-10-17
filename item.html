@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Applied AI Academy</title>
+  <meta name="description" content="Preview, see what's inside and get this learning material.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <nav class="nav">
+    <div class="container nav-inner">
+      <a class="logo" href="index.html">
+        <span class="logo-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/></svg></span>
+        <span data-site-name>Applied AI Academy</span>
+      </a>
+      <button class="menu-btn" aria-label="Open menu"></button>
+      <div class="nav-links">
+        <a href="index.html#topics">Topics</a>
+        <a href="index.html#library">Library</a>
+        <a href="index.html#paths">Learning paths</a>
+        <a class="btn-pill" href="index.html#subscribe">Get updates</a>
+      </div>
+    </div>
+  </nav>
+
+  <main id="product">
+    <header class="p-hero">
+      <div class="hero-grid"></div>
+      <div class="container p-hero-inner">
+        <div class="p-info">
+          <a class="crumb" id="crumb" href="index.html#library">← Library</a>
+          <div class="p-badges" id="p-badges"></div>
+          <h1 id="p-title">Loading…</h1>
+          <p class="p-headline" id="p-headline"></p>
+          <div class="p-meta" id="p-meta"></div>
+          <div class="buy-box" id="buy-box"></div>
+        </div>
+        <div class="gallery" id="gallery"></div>
+      </div>
+    </header>
+
+    <section class="p-section">
+      <div class="container p-two">
+        <div>
+          <div class="kicker">What's inside</div>
+          <h2 class="title sm">Everything you get</h2>
+          <ul class="checklist" id="p-inside"></ul>
+        </div>
+        <div>
+          <div class="kicker">Who it's for</div>
+          <h2 class="title sm">Made for</h2>
+          <div class="audience" id="p-audience"></div>
+          <p class="p-desc" id="p-desc"></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="p-section alt" id="usage-wrap">
+      <div class="container">
+        <div class="kicker">How people use it</div>
+        <h2 class="title sm">Put it to work this week</h2>
+        <div class="uses" id="p-uses"></div>
+      </div>
+    </section>
+
+    <section class="p-section" id="benefits-wrap">
+      <div class="container">
+        <div class="benefit-band">
+          <div>
+            <div class="kicker">Why it's worth it</div>
+            <h2 class="title sm">The payoff</h2>
+          </div>
+          <ul id="p-benefits"></ul>
+          <div id="buy-repeat"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="p-section" id="faq-wrap" style="padding-top:0">
+      <div class="container narrow">
+        <div class="kicker">Questions</div>
+        <h2 class="title sm">Before you buy</h2>
+        <div class="faq" id="p-faq"></div>
+      </div>
+    </section>
+
+    <section class="p-section alt" id="related-wrap">
+      <div class="container">
+        <div class="kicker">Keep learning</div>
+        <h2 class="title sm">You might also like</h2>
+        <div class="lib-grid" id="p-related" style="margin-top:28px"></div>
+      </div>
+    </section>
+  </main>
+
+  <div class="buy-bar" id="buy-bar"></div>
+
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Preview image">
+    <button class="close-btn" data-lb-close aria-label="Close"></button>
+    <button class="lb-nav prev" data-lb="-1" aria-label="Previous"></button>
+    <img id="lb-img" alt="">
+    <button class="lb-nav next" data-lb="1" aria-label="Next"></button>
+  </div>
+
+  <footer>
+    <div class="container">
+      <span>© <span id="year"></span> <span data-site-name>Applied AI Academy</span>. Practical AI for business.</span>
+      <span><a href="index.html#library">Library</a> · <a href="#" id="contact-link">Contact</a> · <a href="admin.html">Admin</a></span>
+    </div>
+  </footer>
+
+  <script src="assets/js/common.js"></script>
+  <script src="assets/js/item.js"></script>
+</body>
+</html>

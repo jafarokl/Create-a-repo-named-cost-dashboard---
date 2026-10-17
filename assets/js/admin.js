@@ -4,6 +4,7 @@ const LIB_PATH = 'data/library.json';
 let mode = 'file';
 let pickedFile = null;
 let library = null;
+let editingId = null;
 
 document.querySelectorAll('[data-icon]').forEach((el) => { el.outerHTML = ICONS[el.dataset.icon]; });
 initNav();
@@ -112,7 +113,8 @@ function renderManage(connected) {
     return `<div class="manage-item">
       <span class="type-badge" style="--tc:${t.color}">${ICONS[t.icon]}</span>
       <div class="grow"><strong>${esc(i.title)}</strong><small>${fmtDate(i.date)} · ${esc(t.label)}</small></div>
-      ${connected ? `<button class="icon-btn" title="Remove from site" data-del="${esc(i.id)}">${ICONS.trash}</button>` : ''}
+      ${isPaid(i) ? `<span class="price-chip">${priceLabel(i, library.site?.currency)}</span>` : '<span class="price-chip free">Free</span>'}
+      ${connected ? `<button class="icon-btn edit" title="Edit" data-edit="${esc(i.id)}">${ICONS.edit}</button><button class="icon-btn" title="Remove from site" data-del="${esc(i.id)}">${ICONS.trash}</button>` : ''}
     </div>`;
   }).join('');
 }
@@ -164,17 +166,83 @@ async function connect(verbose) {
   }
 }
 
+const lines = (id) => $(id).value.split('\n').map((l) => l.trim()).filter(Boolean);
+const togglePaidNote = () => { $('#paid-note').hidden = !(Number($('#price').value) > 0); };
+$('#price').addEventListener('input', togglePaidNote);
+
+function setMode(m) {
+  document.querySelector(`[data-mode="${m}"]`).click();
+}
+
+function resetForm() {
+  editingId = null;
+  $('#upload-form').reset();
+  pickedFile = null; $('#file-name').textContent = '';
+  $('#form-title').textContent = 'Add new material';
+  $('#submit-btn').textContent = 'Publish to site';
+  $('#cancel-edit').hidden = true;
+  $('#preview-note').textContent = 'Tip: add 2–5 screenshots of your best pages or slides. They show on the sales page as a sneak peek.';
+  renderCategories(); togglePaidNote(); setMode('file');
+}
+$('#cancel-edit').addEventListener('click', resetForm);
+
+function startEdit(item) {
+  resetForm();
+  editingId = item.id;
+  setMode(item.type === 'link' || (item.url && !item.file) ? 'link' : 'file');
+  $('#url').value = item.url || '';
+  $('#title').value = item.title || '';
+  $('#description').value = item.description || '';
+  $('#category').value = item.category; $('#new-cat-wrap').hidden = true;
+  $('#level').value = item.level || 'Beginner';
+  $('#minutes').value = item.minutes || '';
+  $('#tags').value = (item.tags || []).join(', ');
+  $('#featured').checked = !!item.featured;
+  $('#price').value = Number(item.price) || 0;
+  $('#buyUrl').value = item.buyUrl || '';
+  $('#headline').value = item.headline || '';
+  $('#inside').value = (item.inside || []).join('\n');
+  $('#audience').value = (item.audience || []).join('\n');
+  $('#useCases').value = (item.useCases || []).map((u) => `${u.title}: ${u.text}`).join('\n');
+  $('#benefits').value = (item.benefits || []).join('\n');
+  $('#length').value = item.length || '';
+  $('#format').value = item.file ? '' : (item.type || '');
+  $('#file-name').textContent = item.file ? `Current file: ${item.file.split('/').pop()} (choose a new one to replace it)` : '';
+  $('#preview-note').textContent = `${(item.previews || []).length} preview image(s) on the page now. Choosing new images replaces them.`;
+  $('#form-title').textContent = `Editing: ${item.title}`;
+  $('#submit-btn').textContent = 'Save changes';
+  $('#cancel-edit').hidden = false;
+  togglePaidNote();
+  $('#upload-form').scrollIntoView({ behavior: 'smooth' });
+}
+
+async function deleteFile(path, message) {
+  const { branch } = cfg();
+  const enc = path.split('/').map(encodeURIComponent).join('/');
+  try {
+    const meta = await gh(`/contents/${enc}?ref=${encodeURIComponent(branch)}`);
+    await gh(`/contents/${enc}`, { method: 'DELETE', body: JSON.stringify({ message, sha: meta.sha, branch }) });
+  } catch (err) {
+    if (err.status !== 404) throw err;
+  }
+}
+
 $('#upload-form').addEventListener('submit', async (e) => {
   e.preventDefault();
   const st = $('#status'); const btn = $('#submit-btn');
+  const existing = editingId && library.items.find((i) => i.id === editingId);
+  const price = Math.max(0, Number($('#price').value) || 0);
+  const previewFiles = [...$('#previews').files];
   if (!cfg().token) return showStatus(st, 'err', 'Connect to GitHub first (panel on the right).');
-  if (mode === 'file' && !pickedFile) return showStatus(st, 'err', 'Choose a file to upload.');
+  if (mode === 'file' && !pickedFile && !existing && !price) return showStatus(st, 'err', 'Choose a file to upload. Paid items can skip the file and use preview images instead.');
+  if (mode === 'file' && !pickedFile && !existing && price && !previewFiles.length) return showStatus(st, 'err', 'Add at least one preview image so buyers can see what they get.');
   if (mode === 'link' && !$('#url').value.trim()) return showStatus(st, 'err', 'Paste the link URL.');
-  if (mode === 'file' && pickedFile.size > 50 * 1048576) return showStatus(st, 'err', 'That file is over 50 MB. Upload it to YouTube / Google Drive and add it as a link instead.');
+  if (pickedFile && pickedFile.size > 50 * 1048576) return showStatus(st, 'err', 'That file is over 50 MB. Upload it to YouTube / Google Drive and add it as a link instead.');
+  if (previewFiles.some((f) => f.size > 5 * 1048576)) return showStatus(st, 'err', 'Preview images must be under 5 MB each. Try JPG screenshots.');
 
   const title = $('#title').value.trim();
   const today = new Date().toISOString().slice(0, 10);
-  const id = `${slugify(title)}-${Date.now().toString(36)}`;
+  const id = existing ? existing.id : `${slugify(title)}-${Date.now().toString(36)}`;
   let category = $('#category').value;
   const newCatName = $('#new-cat').value.trim();
   if (category === '__new') {
@@ -183,41 +251,76 @@ $('#upload-form').addEventListener('submit', async (e) => {
   }
 
   btn.disabled = true;
+  const removeLater = [];
   try {
     const item = {
+      ...(existing || {}),
       id, title,
       description: $('#description').value.trim(),
       category,
       tags: $('#tags').value.split(',').map((t) => t.trim()).filter(Boolean),
       level: $('#level').value,
       minutes: Number($('#minutes').value) || undefined,
-      date: today,
+      date: existing ? existing.date : today,
+      updated: existing ? today : undefined,
       featured: $('#featured').checked || undefined,
+      price,
+      buyUrl: $('#buyUrl').value.trim(),
+      headline: $('#headline').value.trim() || undefined,
+      inside: lines('#inside'),
+      audience: lines('#audience'),
+      useCases: lines('#useCases').map((l) => {
+        const i = l.indexOf(':');
+        return i > 0 ? { title: l.slice(0, i).trim(), text: l.slice(i + 1).trim() } : { title: l, text: '' };
+      }),
+      benefits: lines('#benefits'),
+      length: $('#length').value.trim() || undefined,
     };
     if (mode === 'file') {
-      const ext = (pickedFile.name.match(/\.([^.]+)$/) || [, ''])[1].toLowerCase();
-      const path = `materials/${today}-${slugify(title)}${ext ? '.' + ext : ''}`;
-      showStatus(st, 'info', `Uploading <strong>${esc(pickedFile.name)}</strong>…`);
-      await putFile(path, await b64FromFile(pickedFile), `Add material: ${title}`);
-      item.type = typeFromName(pickedFile.name);
-      item.file = path;
+      delete item.url;
+      if (pickedFile) {
+        const ext = (pickedFile.name.match(/\.([^.]+)$/) || [, ''])[1].toLowerCase();
+        const path = `materials/${today}-${slugify(title)}${ext ? '.' + ext : ''}`;
+        showStatus(st, 'info', `Uploading <strong>${esc(pickedFile.name)}</strong>…`);
+        await putFile(path, await b64FromFile(pickedFile), `Add material: ${title}`, existing?.file === path ? (await gh(`/contents/${path}?ref=${encodeURIComponent(cfg().branch)}`)).sha : undefined);
+        if (existing?.file && existing.file !== path) removeLater.push(existing.file);
+        item.type = typeFromName(pickedFile.name);
+        item.file = path;
+      } else {
+        // Paid item sold elsewhere: there's no file here, so use the format the owner picked.
+        item.type = $('#format').value || existing?.type || 'other';
+      }
     } else {
+      delete item.file;
       const url = $('#url').value.trim();
       item.url = url;
       item.type = /youtu\.?be|vimeo\.com|\.(mp4|webm|mov)(\?|$)/i.test(url) ? 'video' : 'link';
+    }
+    if (previewFiles.length) {
+      const stamp = Date.now().toString(36);
+      const paths = [];
+      for (const [n, f] of previewFiles.entries()) {
+        showStatus(st, 'info', `Uploading preview ${n + 1} of ${previewFiles.length}…`);
+        const ext = (f.name.match(/\.([^.]+)$/) || [, 'jpg'])[1].toLowerCase();
+        const path = `previews/${id}-${stamp}-${n + 1}.${ext}`;
+        await putFile(path, await b64FromFile(f), `Add preview for: ${title}`);
+        paths.push(path);
+      }
+      removeLater.push(...(existing?.previews || []));
+      item.previews = paths;
     }
     showStatus(st, 'info', 'Updating the library…');
     library = await updateLibrary((data) => {
       if (!data.categories.some((c) => c.id === category)) {
         data.categories.push({ id: category, name: newCatName || category, icon: 'folder', blurb: '' });
       }
-      data.items.push(item);
-    }, `Library: add “${title}”`);
-    renderCategories(); renderManage(true);
-    $('#category').value = category; $('#new-cat-wrap').hidden = true; $('#new-cat').value = '';
-    showStatus(st, 'ok', `Published! <strong>${esc(title)}</strong> will appear on the site in about 1–2 minutes. <a href="index.html#item=${encodeURIComponent(id)}">View it</a>`);
-    $('#upload-form').querySelectorAll('#title, #description, #tags, #url').forEach((el) => (el.value = ''));
-    $('#featured').checked = false; pickedFile = null; $('#file').value = ''; $('#file-name').textContent = '';
+      const at = data.items.findIndex((i) => i.id === id);
+      if (at >= 0) data.items[at] = item; else data.items.push(item);
+    }, `Library: ${existing ? 'update' : 'add'} “${title}”`);
+    for (const old of removeLater) await deleteFile(old, `Remove old file for: ${title}`).catch(() => {});
+    showStatus(st, 'ok', `${existing ? 'Saved' : 'Published'}! <strong>${esc(title)}</strong> will update on the site in about 1–2 minutes. <a href="${itemHref(item)}">View its page</a>`);
+    resetForm();
+    renderManage(true);
   } catch (err) {
     showStatus(st, 'err', 'Upload failed: ' + esc(err.message));
   } finally {
@@ -226,22 +329,17 @@ $('#upload-form').addEventListener('submit', async (e) => {
 });
 
 $('#manage-list').addEventListener('click', async (e) => {
+  const ed = e.target.closest('[data-edit]');
+  if (ed) return startEdit(library.items.find((i) => i.id === ed.dataset.edit));
   const b = e.target.closest('[data-del]');
   if (!b) return;
   const item = library.items.find((i) => i.id === b.dataset.del);
-  if (!item || !confirm(`Remove “${item.title}” from the site?${item.file ? ' The file will be deleted too.' : ''}`)) return;
+  if (!item || !confirm(`Remove “${item.title}” from the site? Its file and preview images will be deleted too.`)) return;
   b.disabled = true;
   try {
     library = await updateLibrary((data) => { data.items = data.items.filter((i) => i.id !== item.id); }, `Library: remove “${item.title}”`);
-    if (item.file) {
-      const { branch } = cfg();
-      const enc = item.file.split('/').map(encodeURIComponent).join('/');
-      try {
-        const meta = await gh(`/contents/${enc}?ref=${encodeURIComponent(branch)}`);
-        await gh(`/contents/${enc}`, { method: 'DELETE', body: JSON.stringify({ message: `Remove material: ${item.title}`, sha: meta.sha, branch }) });
-      } catch (err) {
-        if (err.status !== 404) throw err;
-      }
+    for (const path of [item.file, ...(item.previews || [])].filter(Boolean)) {
+      await deleteFile(path, `Remove material: ${item.title}`);
     }
     renderManage(true);
   } catch (err) {
