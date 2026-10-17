@@ -61,7 +61,7 @@ function render() {
   document.title = `${item.title} · ${site.name || 'Applied AI Academy'}`;
 
   $('#crumb').textContent = `← ${cat ? cat.name : 'Library'}`;
-  $('#crumb').href = 'index.html#library';
+  $('#crumb').href = './#library';
   $('#p-badges').innerHTML = `<span class="type-badge" style="--tc:${t.color}">${ICONS[t.icon]}${t.label}</span>
     ${isNew(item.date) ? '<span class="new-pill">NEW</span>' : ''}
     ${item.featured ? '<span class="tag on-dark">Editor’s pick</span>' : ''}`;
@@ -114,7 +114,7 @@ function render() {
 
 function notFound() {
   $('#p-title').textContent = 'We couldn’t find that material';
-  $('#p-headline').innerHTML = 'It may have been moved or removed. <a href="index.html#library" style="color:#fff">Browse the library</a>.';
+  $('#p-headline').innerHTML = 'It may have been moved or removed. <a href="./#library" style="color:#fff">Browse the library</a>.';
   ['usage-wrap', 'benefits-wrap', 'faq-wrap', 'related-wrap'].forEach((id) => ($('#' + id).hidden = true));
   document.querySelector('.p-section').hidden = true;
 }
