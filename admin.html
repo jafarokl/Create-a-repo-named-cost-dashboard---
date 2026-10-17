@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Upload Studio</title>
+  <meta name="robots" content="noindex">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <nav class="nav">
+    <div class="container nav-inner">
+      <a class="logo" href="index.html">
+        <span class="logo-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/></svg></span>
+        <span data-site-name>Applied AI Academy</span>
+      </a>
+      <button class="menu-btn" aria-label="Open menu"></button>
+      <div class="nav-links">
+        <a href="index.html">View site</a>
+        <a class="btn-pill" href="#connect">Settings</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero" style="padding-bottom:110px">
+    <div class="hero-grid"></div>
+    <div class="container">
+      <span class="eyebrow"><span class="dot"></span>Owner area</span>
+      <h1 style="font-size:clamp(40px,6vw,68px)">Upload <em>Studio</em></h1>
+      <p class="lead" style="margin-bottom:0">Add new decks, spreadsheets, PDFs, videos or links. They’re saved to your GitHub repository and appear on the site within a minute or two.</p>
+    </div>
+  </header>
+
+  <main class="admin-wrap" style="margin-top:-80px; padding-top:0; position:relative; z-index:2">
+    <div class="container admin-grid">
+      <div class="panel">
+        <h2>Add new material</h2>
+        <p>Anything goes — AI guides, templates, or unrelated resources. Create a new topic on the fly if you need one.</p>
+        <form class="form" id="upload-form">
+          <div class="seg" role="tablist">
+            <button type="button" class="on" data-mode="file">Upload a file</button>
+            <button type="button" data-mode="link">Add a link / video URL</button>
+          </div>
+
+          <div id="file-block">
+            <input type="file" id="file" hidden>
+            <div class="drop" id="drop" tabindex="0">
+              <span data-icon="upload"></span>
+              <div><strong>Drop a file here</strong> or click to choose</div>
+              <div class="help">PowerPoint, Excel, Word, PDF, images, MP4 video… (up to ~50 MB)</div>
+              <div id="file-name" style="margin-top:8px; font-weight:600"></div>
+            </div>
+          </div>
+          <label id="link-block" hidden>Link URL
+            <input id="url" type="url" placeholder="https://… (YouTube, Google Drive, article, etc.)">
+          </label>
+
+          <label>Title <input id="title" required placeholder="e.g. ChatGPT vs Claude for Sales Teams"></label>
+          <label>Short description <textarea id="description" placeholder="One or two sentences on what people will learn."></textarea></label>
+          <div class="row">
+            <label>Topic
+              <select id="category"></select>
+            </label>
+            <label id="new-cat-wrap" hidden>New topic name <input id="new-cat" placeholder="e.g. HR & Hiring"></label>
+            <label>Level
+              <select id="level"><option>Beginner</option><option>Intermediate</option><option>Advanced</option><option>All levels</option></select>
+            </label>
+          </div>
+          <div class="row">
+            <label>Time to learn (minutes) <input id="minutes" type="number" min="1" value="10"></label>
+            <label>Tags (comma separated) <input id="tags" placeholder="prompts, template, sales"></label>
+          </div>
+          <label style="display:flex; align-items:center; gap:10px; font-weight:500"><input id="featured" type="checkbox" style="width:auto"> Feature on the home page</label>
+          <div class="status" id="status"></div>
+          <button class="btn btn-primary" type="submit" id="submit-btn">Publish to site</button>
+        </form>
+      </div>
+
+      <div style="display:grid; gap:24px">
+        <div class="panel" id="connect">
+          <h2>Connect to GitHub</h2>
+          <p>One-time setup. Your token stays in this browser only.</p>
+          <form class="form" id="settings-form">
+            <div class="row">
+              <label>Owner <input id="owner" required placeholder="your-username"></label>
+              <label>Repository <input id="repo" required placeholder="repo-name"></label>
+            </div>
+            <label>Branch <input id="branch" required value="main"></label>
+            <label>Access token <input id="token" type="password" required placeholder="github_pat_…" autocomplete="off"></label>
+            <label style="display:flex; align-items:center; gap:10px; font-weight:500"><input id="remember" type="checkbox" style="width:auto"> Remember token on this device</label>
+            <div class="status" id="conn-status"></div>
+            <button class="btn btn-ghost" type="submit">Save &amp; test connection</button>
+          </form>
+          <div class="help" style="margin-top:16px">
+            <strong>How to get a token</strong>
+            <ol>
+              <li>GitHub → Settings → Developer settings → <em>Fine-grained tokens</em> → Generate.</li>
+              <li>Repository access: <em>Only select repositories</em> → this site’s repo.</li>
+              <li>Permissions → <em>Contents: Read and write</em>. Copy the token and paste it above.</li>
+            </ol>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h2>Published materials</h2>
+          <p id="manage-hint">Connect to GitHub to manage items.</p>
+          <div class="manage-list" id="manage-list"></div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <span>Upload Studio · <span data-site-name>Applied AI Academy</span></span>
+      <a href="index.html">← Back to site</a>
+    </div>
+  </footer>
+
+  <script src="assets/js/common.js"></script>
+  <script src="assets/js/admin.js"></script>
+</body>
+</html>

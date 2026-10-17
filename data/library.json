@@ -1,0 +1,171 @@
+{
+  "site": {
+    "name": "Applied AI Academy",
+    "tagline": "Practical AI for business owners & professionals",
+    "contactEmail": "hello@example.com"
+  },
+  "categories": [
+    {
+      "id": "fundamentals",
+      "name": "AI Fundamentals",
+      "icon": "spark",
+      "blurb": "What AI can and can't do, explained without the jargon."
+    },
+    {
+      "id": "productivity",
+      "name": "Productivity & Assistants",
+      "icon": "bolt",
+      "blurb": "Save hours a week with AI assistants, copilots and writing tools."
+    },
+    {
+      "id": "prompting",
+      "name": "Prompting Playbooks",
+      "icon": "chat",
+      "blurb": "Ready-to-use prompts and techniques that get reliable results."
+    },
+    {
+      "id": "sales-marketing",
+      "name": "Sales & Marketing",
+      "icon": "target",
+      "blurb": "Content, outreach, research and campaigns powered by AI."
+    },
+    {
+      "id": "finance-ops",
+      "name": "Finance & Operations",
+      "icon": "chart",
+      "blurb": "Models, calculators and workflows for numbers and processes."
+    },
+    {
+      "id": "automation",
+      "name": "Automation & Agents",
+      "icon": "flow",
+      "blurb": "Connect tools and let AI agents handle repeatable work."
+    },
+    {
+      "id": "strategy",
+      "name": "Strategy & Leadership",
+      "icon": "compass",
+      "blurb": "Roadmaps, governance, ROI and leading teams through change."
+    },
+    {
+      "id": "general",
+      "name": "General Resources",
+      "icon": "folder",
+      "blurb": "Templates, checklists and other useful material — AI or not."
+    }
+  ],
+  "items": [
+    {
+      "id": "ai-strategy-101",
+      "title": "AI Strategy 101 for Business Leaders",
+      "description": "A short slide deck covering where AI creates value today, how to pick your first use cases, and a 90-day adoption plan.",
+      "category": "strategy",
+      "type": "pptx",
+      "file": "materials/ai-strategy-101.pptx",
+      "tags": [
+        "strategy",
+        "beginner",
+        "roadmap"
+      ],
+      "level": "Beginner",
+      "minutes": 12,
+      "date": "2026-10-15",
+      "featured": true
+    },
+    {
+      "id": "ai-roi-calculator",
+      "title": "AI ROI Calculator",
+      "description": "Plug in hours saved, team size and tool costs to estimate monthly and annual return from an AI rollout.",
+      "category": "finance-ops",
+      "type": "xlsx",
+      "file": "materials/ai-roi-calculator.xlsx",
+      "tags": [
+        "roi",
+        "template",
+        "finance"
+      ],
+      "level": "Intermediate",
+      "minutes": 10,
+      "date": "2026-10-14",
+      "featured": true
+    },
+    {
+      "id": "prompt-playbook",
+      "title": "The Professional's Prompt Playbook",
+      "description": "Twelve proven prompt patterns for email, reports, research and analysis — with fill-in-the-blank templates.",
+      "category": "prompting",
+      "type": "pdf",
+      "file": "materials/prompt-playbook.pdf",
+      "tags": [
+        "prompts",
+        "templates",
+        "beginner"
+      ],
+      "level": "Beginner",
+      "minutes": 8,
+      "date": "2026-10-12",
+      "featured": true
+    },
+    {
+      "id": "prompt-engineering-guide",
+      "title": "Prompt Engineering Guide (external)",
+      "description": "A deeper, free reference on writing clear instructions, giving examples and structuring complex tasks.",
+      "category": "prompting",
+      "type": "link",
+      "url": "https://docs.claude.com/en/docs/build-with-claude/prompt-engineering/overview",
+      "tags": [
+        "prompts",
+        "reference"
+      ],
+      "level": "Intermediate",
+      "minutes": 20,
+      "date": "2026-10-10"
+    },
+    {
+      "id": "team-offsite-checklist",
+      "title": "Team Offsite Planning Checklist",
+      "description": "A general-purpose checklist for planning a team offsite: venue, agenda, budget and follow-ups.",
+      "category": "general",
+      "type": "docx",
+      "file": "materials/team-offsite-checklist.docx",
+      "tags": [
+        "template",
+        "operations"
+      ],
+      "level": "All levels",
+      "minutes": 5,
+      "date": "2026-10-08"
+    },
+    {
+      "id": "ai-glossary",
+      "title": "AI in Plain English: A Business Glossary",
+      "description": "The terms you'll hear most — LLMs, prompts, agents, hallucinations, RAG — each explained in a sentence or two.",
+      "category": "fundamentals",
+      "type": "pdf",
+      "file": "materials/ai-glossary.pdf",
+      "tags": [
+        "beginner",
+        "glossary"
+      ],
+      "level": "Beginner",
+      "minutes": 6,
+      "date": "2026-10-16"
+    },
+    {
+      "id": "meeting-to-action",
+      "title": "Meeting-to-Action Workflow",
+      "description": "A five-step routine that turns any meeting into a summary, an owner-by-owner action list and a follow-up email.",
+      "category": "productivity",
+      "type": "pdf",
+      "file": "materials/meeting-to-action-workflow.pdf",
+      "tags": [
+        "workflow",
+        "prompts",
+        "meetings"
+      ],
+      "level": "Beginner",
+      "minutes": 5,
+      "date": "2026-10-13"
+    }
+  ]
+}
