@@ -1,0 +1,3 @@
+date,description,category,amount,type
+2026-10-01,Client A invoice paid,Sales,5000,income
+2026-10-03,Office rent,Rent,-1200,expense

@@ -92,3 +92,7 @@ python3 -m http.server 8000
 ```
 
 The sample materials, prices and sales copy are placeholders. Replace or delete them whenever you like.
+
+## AI C-Suite (Claude Code)
+
+This repo also contains 12 business systems run by four AI heads (CFO, CMO, CTO, CEO). See [C-SUITE.md](C-SUITE.md).
